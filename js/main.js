@@ -30,7 +30,9 @@ function addToTaskList(index, task) {
     var elTdData = document.createElement('td');
     elTdData.classList.add("taskData");
     elTdData.textContent = task.data;
+    var oldData;
     elTdData.addEventListener('dblclick', function () {
+        oldData = this.textContent;
         this.contentEditable = true;
         this.focus();
         // New code to learn:
@@ -51,11 +53,12 @@ function addToTaskList(index, task) {
         this.addEventListener('keydown', event => {
             if (event.keyCode == 13 || event.which == 13) {
                 event.preventDefault();
+                this.contentEditable = false;
                 if (this.textContent == "") {
                     alert("The field can't be empty.");
+                    this.textContent = oldData;
                     return;
                 }
-                this.contentEditable = false;
                 var id = this.parentElement.id;
                 var tasks = JSON.parse(localStorage.tasks);
                 for (var i = 0; i < tasks.length; i++) {
@@ -67,6 +70,25 @@ function addToTaskList(index, task) {
                 }
                 localStorage.tasks = JSON.stringify(tasks);
             }
+        });
+        this.addEventListener('focusout', event => {
+            event.preventDefault();
+            this.contentEditable = false;
+            if (this.textContent == "") {
+                alert("The field can't be empty.");
+                this.textContent = oldData;
+                return;
+            }
+            var id = this.parentElement.id;
+            var tasks = JSON.parse(localStorage.tasks);
+            for (var i = 0; i < tasks.length; i++) {
+                var savedId = tasks[i].id;
+                if (savedId == id) {
+                    tasks[i].data = this.textContent;
+                    break;
+                }
+            }
+            localStorage.tasks = JSON.stringify(tasks);
         });
     });
     elTr.appendChild(elTdData);
@@ -165,14 +187,14 @@ function removeAllTasks() {
 
 
 document.getElementById('clearAllTask').addEventListener('click', function () {
-    if(confirm('Are you sure you want to remove all tasks?')){
+    if (confirm('Are you sure you want to remove all tasks?')) {
         localStorage.removeItem('tasks');
         removeAllTasks();
         document.getElementById('clearRow').style.display = 'none';
     }
 });
 
-function filterTasks(filterField){
+function filterTasks(filterField) {
     var filter = filterField.value;
     var tasks = document.querySelectorAll('td.taskData');
     if (filter) {
@@ -198,12 +220,12 @@ function filterTasks(filterField){
         // Soft match finder: (any task that contains filter value anywhere in it)
         tasks.forEach(task => {
             var data = task.textContent.toLowerCase();
-            if (data.search(filter)  == -1) {
+            if (data.search(filter) == -1) {
                 task.parentElement.style.display = 'none';
-            }else{
-                if(count % 2 == 1){
+            } else {
+                if (count % 2 == 1) {
                     task.parentElement.style.backgroundColor = '#D9663D';
-                }else{
+                } else {
                     task.parentElement.style.backgroundColor = '#F2935C';
                 }
                 count++;
