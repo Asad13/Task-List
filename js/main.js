@@ -1,7 +1,7 @@
 // Fade out effect
 async function fadeOut(parent, child) {
     //child.classList.toggle('fade');
-    var promise = new Promise((resolve, reject) => { 
+    var promise = new Promise((resolve, reject) => {
         var op = 1;
 
         var timer = setInterval(function () {
@@ -74,27 +74,29 @@ function addToTaskList(index, task) {
     var elTdClose = document.createElement('td');
     elTdClose.classList.add("close");
     elTdClose.innerHTML = '&times;';
-    elTdClose.addEventListener('click',async function () {
-        var tasks = JSON.parse(localStorage.tasks);
-        var id = this.parentElement.getAttribute('id');
-        for (var i = 0; i < tasks.length; i++) {
-            var savedId = tasks[i].id;
-            if (savedId == id) {
-                tasks.splice(i, 1);
-                break;
+    elTdClose.addEventListener('click', async function () {
+        if (confirm('Are you sure to delete this task?')) {
+            var tasks = JSON.parse(localStorage.tasks);
+            var id = this.parentElement.getAttribute('id');
+            for (var i = 0; i < tasks.length; i++) {
+                var savedId = tasks[i].id;
+                if (savedId == id) {
+                    tasks.splice(i, 1);
+                    break;
+                }
             }
-        }
-        localStorage.tasks = JSON.stringify(tasks);
-        //this.parentElement.parentElement.removeChild(this.parentElement);
-        await fadeOut(this.parentElement.parentElement, this.parentElement);
-        if (tasks.length > 0) {
-            var indices = document.querySelectorAll('th.index');
-            for (var i = 0; i < indices.length; i++) {
-                //console.log(i);
-                indices[i].textContent = `${i + 1}.`;
+            localStorage.tasks = JSON.stringify(tasks);
+            //this.parentElement.parentElement.removeChild(this.parentElement);
+            await fadeOut(this.parentElement.parentElement, this.parentElement);
+            if (tasks.length > 0) {
+                var indices = document.querySelectorAll('th.index');
+                for (var i = 0; i < indices.length; i++) {
+                    //console.log(i);
+                    indices[i].textContent = `${i + 1}.`;
+                }
+            } else {
+                document.getElementById('clearRow').style.display = 'none';
             }
-        } else {
-            document.getElementById('clearRow').style.display = 'none';
         }
     });
     elTr.appendChild(elTdClose);
@@ -120,7 +122,7 @@ function showTask() {
                 addToTaskList((i + 1), tasks[i]);
             }
             document.getElementById('clearRow').style.display = 'flex';
-        }else{
+        } else {
             document.getElementById('clearRow').style.display = 'none';
         }
     }
@@ -173,9 +175,11 @@ function removeAllTasks() {
 
 
 document.getElementById('clearAllTask').addEventListener('click', function () {
-    localStorage.removeItem('tasks');
-    removeAllTasks();
-    document.getElementById('clearRow').style.display = 'none';
+    if(confirm('Are you sure you want to remove all tasks?')){
+        localStorage.removeItem('tasks');
+        removeAllTasks();
+        document.getElementById('clearRow').style.display = 'none';
+    }
 });
 
 
