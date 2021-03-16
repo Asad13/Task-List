@@ -192,9 +192,17 @@ function filterTasks(filterField) {
         filter = filter.toLowerCase();
 
         var filtered = [];
-        tasks.forEach(task => {
+        // Hard match finder: (checks from the beginning of the task data with the filter value)
+        /*tasks.forEach(task => {
             var data = task.data.substring(0, len).toLowerCase();
             if (data == filter) {
+                filtered.push(task);
+            }
+        });*/
+        // Soft match finder: (any task that contains filter value anywhere in it)
+        tasks.forEach(task => {
+            var data = task.data.toLowerCase();
+            if (data.search(filter)  > -1) {
                 filtered.push(task);
             }
         });
