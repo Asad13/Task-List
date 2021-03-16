@@ -289,19 +289,6 @@ button#addTask:hover,button#clearAllTask:hover{
     /*visibility: hidden;*/
 }
 
-
-@keyframes fadeOut{
-    from {left:0;}
-    to {left:100px;}
-}
-
-.fade{
-    position: relative;
-    left: 0;
-    animation-name: fadeOut;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-}
 /* Color Theme Swatches in Hex */
 .Fashion-1-hex { color: #F2D2B6; }
 .Fashion-2-hex { color: #F2935C; }

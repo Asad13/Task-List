@@ -104,17 +104,7 @@ function addToTaskList(index, task) {
 }
 
 function showTask() {
-    removeAllTasks();
-    if (sessionStorage.filtered) {
-        var tasks = JSON.parse(sessionStorage.filtered);
-        sessionStorage.removeItem('filtered');
-        if (tasks.length > 0) {
-            for (var i = 0; i < tasks.length; i++) {
-                addToTaskList((i + 1), tasks[i]);
-            }
-        }
-        document.getElementById('clearRow').style.display = 'none';
-    } else if (localStorage.tasks) {
+    if (localStorage.tasks) {
         var tasks = JSON.parse(localStorage.tasks);
 
         if (tasks.length > 0) {
@@ -182,38 +172,50 @@ document.getElementById('clearAllTask').addEventListener('click', function () {
     }
 });
 
-
-function filterTasks(filterField) {
+function filterTasks(filterField){
     var filter = filterField.value;
+    var tasks = document.querySelectorAll('td.taskData');
     if (filter) {
         document.getElementById('taskTaker').setAttribute('disabled', 'disabled');
-        var tasks = JSON.parse(localStorage.tasks);
         var len = filter.length;
         filter = filter.toLowerCase();
-
-        var filtered = [];
+        var count = 1;
+        //var filtered = [];
         // Hard match finder: (checks from the beginning of the task data with the filter value)
         /*tasks.forEach(task => {
-            var data = task.data.substring(0, len).toLowerCase();
+            var data = task.textContent.toLowerCase();
             if (data == filter) {
-                filtered.push(task);
+                task.style.display = 'none';
+            }else{
+                if(count % 2 == 1){
+                    task.parentElement.style.backgroundColor = '#D9663D';
+                }else{
+                    task.parentElement.style.backgroundColor = '#F2935C';
+                }
+                count++;
             }
         });*/
         // Soft match finder: (any task that contains filter value anywhere in it)
         tasks.forEach(task => {
-            var data = task.data.toLowerCase();
-            if (data.search(filter)  > -1) {
-                filtered.push(task);
+            var data = task.textContent.toLowerCase();
+            if (data.search(filter)  == -1) {
+                task.parentElement.style.display = 'none';
+            }else{
+                if(count % 2 == 1){
+                    task.parentElement.style.backgroundColor = '#D9663D';
+                }else{
+                    task.parentElement.style.backgroundColor = '#F2935C';
+                }
+                count++;
             }
         });
-        sessionStorage.setItem('filtered', JSON.stringify(filtered));
-        //console.log(JSON.parse(sessionStorage.filtered));
     } else {
+        removeAllTasks();
+        showTask();
         if (document.getElementById('taskTaker').hasAttribute('disabled')) {
             document.getElementById('taskTaker').removeAttribute('disabled');
         }
     }
-    showTask();
 }
 
 document.getElementById('filter').addEventListener('keyup', function () {
