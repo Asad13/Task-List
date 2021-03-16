@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <!-- Code for favicon to add here-->
+    <!-- Favicon -->
+    <!-- <link rel="shortcut icon" type="image/png" href="/img/favicon.png"> -->
+
+    <!-- If required Google Fonts to be added here -->
+    <!-- Google Fonts -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;1,300&display=swap" rel="stylesheet"> -->
+
+    <!-- My Styles Here -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Title Here -->
+    <title>My Tasks</title>
+
+    <!-- If icons from Fontawesome is required add the later code -->
+    <!-- FontAwesome Icon Library-->
+    <!-- <script src="https://kit.fontawesome.com/17bec82fcd.js" crossorigin="anonymous"></script> -->
+</head>
+
+<body>
+    <div class="container">
+        <div class="row" id="task-row">
+            <div class="col-md-6 task-container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <input type="text" placeholder="Task" id="taskTaker" name="taskTaker">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" id="addTask" name="addTask">ADD TASK</button>
+                    </div>
+                </div>
+                <div class="row" id="taskListContainer">
+                    <div class="col-12">
+                        <table id="taskList"></table>
+                    </div>
+                </div>
+                <div class="row" id="clearRow">
+                    <div class="col-md-4" id="clearContainer">
+                        <button type="button" id="clearAllTask" name="clearAllTask">CLEAR ALL</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="filter-container">
+                <input type="text" placeholder="Filter" id="filter" name="filter">
+            </div>
+        </div>
+    </div>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>
