@@ -205,7 +205,7 @@ function filterTasks(filterField) {
         //var filtered = [];
         // Hard match finder: (checks from the beginning of the task data with the filter value)
         /*tasks.forEach(task => {
-            var data = task.textContent.toLowerCase();
+            var data = task.textContent.trim().toLowerCase();
             if (data == filter) {
                 task.style.display = 'none';
             }else{
@@ -219,7 +219,7 @@ function filterTasks(filterField) {
         });*/
         // Soft match finder: (any task that contains filter value anywhere in it)
         tasks.forEach(task => {
-            var data = task.textContent.toLowerCase();
+            var data = task.textContent.trim().toLowerCase();
             if (data.search(filter) == -1) {
                 task.parentElement.style.display = 'none';
             } else {
